@@ -24,7 +24,8 @@ Please make sure to **verify and test everything carefully** before using it in 
 
 > 🚧 **Note:** Development is in progress for version v1.2
 
-<video src="ImageVideo/Sample_Video.mp4" controls width="1000"></video>
+[Watch Demo](https://github.com/SkillDevloper/Reco-Nova/blob/main/ImageVideo/Sample_Video.mp4)
+
 
 A powerful **Linux-based command-line reconnaissance tool** designed to automate key phases of bug bounty and penetration testing reconnaissance. **Professional Edition** with enhanced UI and automatic dependency management.
 
