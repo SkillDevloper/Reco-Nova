@@ -55,7 +55,7 @@ A powerful **Linux-based command-line reconnaissance tool** designed to automate
 
 ```bash
 # Clone the repository
-git clone https://github.com/SkillDevloper/reco-nova.git
+git clone https://github.com/SkillDevloper/Reco-Nova.git
 cd reco-nova
 
 # Run any command - dependencies auto-install!
