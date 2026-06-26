@@ -34,20 +34,19 @@ Please make sure to **verify and test everything carefully** before using it in 
 
 ## 📌 Table of Contents
 
-- [What is Reco-Nova?](##-what-is-reco-nova)
-- [What's New in v1.1?](##-whats-new-in-v11)
-- [Features](##-features)
-- [Folder Structure](##-folder-structure)
-- [Installation](##-installation)
-- [Man Page](##-man-page)
-- [Usage](##-usage)
-- [All Commands](##-all-commands)
-- [Output Files](##-output-files)
-- [Scan Phases](##-scan-phases)
-- [Intelligence Engine](##-intelligence-engine)
-- [Dependencies](##-dependencies)
-- [Troubleshooting](##-troubleshooting)
-- [Legal Disclaimer](##-legal-disclaimer)
+- [What is Reco-Nova?](#what-is-reco-nova)
+- [What's New in v1.2?](#whats-new-in-v12)
+- [Features](#features)
+- [Folder Structure](#folder-structure)
+- [Installation](#installation)
+- [Man Page](#man-page)
+- [Usage](#usage)
+- [All Commands](#all-commands)
+- [Output Files](#output-files)
+- [Scan Phases](#scan-phases)
+- [Intelligence Engine](#intelligence-engine)
+- [Troubleshooting](#troubleshooting)
+- [Legal Disclaimer](#legal-disclaimer)
 
 ---
 
