@@ -34,8 +34,8 @@ Please make sure to **verify and test everything carefully** before using it in 
 
 ## 📌 Table of Contents
 
-- [What is Reco-Nova?](#what-is-reco-nova)
 - [What's New in v1.2?](#whats-new-in-v12)
+- [What is Reco-Nova?](#what-is-reco-nova)
 - [Features](#features)
 - [Folder Structure](#folder-structure)
 - [Installation](#installation)
@@ -47,6 +47,7 @@ Please make sure to **verify and test everything carefully** before using it in 
 - [Intelligence Engine](#intelligence-engine)
 - [Troubleshooting](#troubleshooting)
 - [Legal Disclaimer](#legal-disclaimer)
+- [Developer](#developer)
 
 ---
 
