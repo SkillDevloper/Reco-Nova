@@ -44,10 +44,10 @@ Please make sure to **verify and test everything carefully** before using it in 
 - [All Commands](#all-commands)
 - [Output Files](#output-files)
 - [Scan Phases](#scan-phases)
-- [Intelligence Engine](#intelligence-engine)
+- [Intelligence Engine](#-intelligence-engine)
 - [Troubleshooting](#troubleshooting)
-- [Legal Disclaimer](#legal-disclaimer)
-- [Developer](#developer)
+- [Legal Disclaimer](#-legal-disclaimer)
+- [Developer](#-developer)
 
 ---
 
@@ -621,7 +621,7 @@ Priority: **CRITICAL** (80–100) · **HIGH** (60–79) · **MEDIUM** (35–59) 
 
 ---
 
-## 🧠 Intelligence Engine
+## Intelligence Engine
 
 The intelligence engine correlates all collected data into actionable security insights:
 
@@ -722,7 +722,7 @@ reco-nova -d example.com
 
 ---
 
-## ⚠️ Legal Disclaimer
+## Legal Disclaimer
 
 ╔══════════════════════════════════════════════════════════════╗
 ║                    LEGAL DISCLAIMER                          ║
@@ -743,7 +743,7 @@ reco-nova -d example.com
 ║  • Comply with bug bounty program scope and rules            ║
 ╚══════════════════════════════════════════════════════════════╝
 
-## 👤 Developer
+## Developer
 
 **Daniyal Shahid**
 
