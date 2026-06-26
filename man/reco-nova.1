@@ -1,0 +1,321 @@
+.TH RECO-NOVA 1 "March 2026" "v1.2" "Reco-Nova Manual"
+.SH NAME
+reco-nova \- Professional Reconnaissance Intelligence Framework
+.SH SYNOPSIS
+.B reco-nova
+[\fIOPTIONS\fR]
+.B \-d
+\fIDOMAIN\fR
+.br
+.B reco-nova
+[\fIOPTIONS\fR]
+.B \-l
+\fIFILE\fR
+.br
+.B reco-nova
+.B setup
+.br
+.B reco-nova
+.B monitor
+\fIDOMAIN\fR [\fI\-\-interval\fR \fISECONDS\fR]
+.br
+.B reco-nova
+.B report
+\fIDOMAIN\fR
+.SH DESCRIPTION
+Reco-Nova is a premium, enterprise-grade reconnaissance intelligence framework designed for professional security researchers, bug bounty hunters, and penetration testers. Built with modern Python 3.9+ and cutting-edge web technologies, it transforms raw reconnaissance data into actionable security intelligence.
+.PP
+The framework automates the entire reconnaissance lifecycle through 7 comprehensive phases:
+.PP
+.RS
+1. Subdomain Discovery
+.br
+2. HTTP Probing & Endpoint Discovery
+.br
+3. URL & Parameter Discovery
+.br
+4. JavaScript Intelligence
+.br
+5. Sensitive Asset Detection
+.br
+6. Intelligence & Correlation
+.br
+7. Screenshots & Report Generation
+.RE
+.SH OPTIONS
+.SS Target Options
+.TP
+.BR \-d ", " \-\-domain " " \fIDOMAIN\fR
+Single target domain to scan (e.g., example.com)
+.TP
+.BR \-l ", " \-\-list " " \fIFILE\fR
+File containing list of domains (one per line)
+.SS Scan Options
+.TP
+.BR \-\-full
+Run full reconnaissance with all modules enabled
+.TP
+.BR \-\-passive\-only
+Use only passive sources (no active probing)
+.TP
+.BR \-\-no\-screenshots
+Skip screenshot capture phase
+.TP
+.BR \-\-graph
+Generate interactive attack surface graph (D3.js)
+.SS Reporting Options
+.TP
+.BR \-\-simple
+Generate classic/simple HTML report instead of modern Bootstrap theme
+.TP
+.BR \-\-output " " \fIDIR\fR
+Output directory (default: output)
+.SS Performance Options
+.TP
+.BR \-\-threads " " \fIN\fR
+Number of concurrent threads (default: 20)
+.TP
+.BR \-\-timeout " " \fISECONDS\fR
+HTTP request timeout in seconds (default: 15)
+.SS Output Control
+.TP
+.BR \-\-debug
+Enable verbose debug output with detailed logging
+.TP
+.BR \-v ", " \-\-verbose
+Verbose output mode
+.SH COMMANDS
+.SS setup
+Verify and install all dependencies:
+.PP
+.B reco-nova setup
+.PP
+Checks for Python packages, Firefox, Go tools, and configures the environment.
+.SS monitor
+Enable continuous monitoring mode:
+.PP
+.B reco-nova monitor example.com --interval 3600
+.PP
+Monitors target for changes at specified interval (default: 3600 seconds).
+.SS report
+Generate final report for a previously scanned domain:
+.PP
+.B reco-nova report example.com
+.SH EXAMPLES
+.SS Basic Scan
+Scan a single domain with default settings:
+.PP
+.B reco-nova -d example.com
+.SS Full Reconnaissance
+Comprehensive scan with all features:
+.PP
+.B reco-nova -d example.com --full --graph
+.SS Multiple Targets
+Scan domains from a file:
+.PP
+.B reco-nova -l targets.txt --threads 30
+.SS Passive Only
+Passive reconnaissance without active probing:
+.PP
+.B reco-nova -d example.com --passive-only
+.SS Classic Report
+Generate simple HTML report instead of modern:
+.PP
+.B reco-nova -d example.com --simple
+.SS Debug Mode
+Enable detailed logging for troubleshooting:
+.PP
+.B reco-nova -d example.com --debug
+.SH OUTPUT FILES
+.SS Text Output (output/<domain>/)
+.TP
+.B subdomains.txt
+All discovered subdomains
+.TP
+.B live_hosts.txt
+Responsive HTTP hosts
+.TP
+.B urls.txt
+Discovered URLs from all sources
+.TP
+.B parameters.txt
+URL parameters grouped by name
+.TP
+.B apis.txt
+API endpoints with status codes
+.TP
+.B secrets.txt
+Potential credentials and tokens
+.TP
+.B sensitive_files.txt
+Exposed sensitive files
+.TP
+.B cloud_assets.txt
+Cloud storage assets (S3, Azure, GCP)
+.SS Reports (reports/)
+.TP
+.B <domain>_modern.html
+Modern Bootstrap dark theme report (default)
+.TP
+.B <domain>_report.html
+Classic simple HTML report (--simple flag)
+.SS Graphs (graphs/)
+.TP
+.B <domain>_graph.html
+Interactive D3.js attack surface visualization
+.TP
+.B <domain>_graph.json
+Machine-readable graph data
+.SS Screenshots (output/<domain>/screenshots/)
+.TP
+.B *.png
+Webpage screenshots captured with Firefox Headless
+.SH EXIT STATUS
+.TP
+.B 0
+Successful execution
+.TP
+.B 1
+General error or scan failure
+.TP
+.B 2
+Invalid arguments or configuration
+.SH ENVIRONMENT
+.TP
+.B PYTHONPATH
+Must include reco-nova directory for imports
+.TP
+.B PATH
+Should include ~/.local/bin for Go tools
+.SH FILES
+.TP
+.B ~/.bashrc
+Shell configuration with reco-nova alias
+.TP
+.B ~/.zshrc
+Zsh configuration with reco-nova alias
+.TP
+.B /usr/local/bin/reco-nova
+Global command symlink (after install)
+.TP
+.B /usr/share/man/man1/reco-nova.1.gz
+Manual page location
+.SH PHASES
+Reco-Nova executes scans in 7 phases with professional terminal output:
+.PP
+.RS
+.nf
+[Phase 1/7] [] Subdomain Discovery
+[Phase 2/7] [~] HTTP Probing & Endpoint Discovery  
+[Phase 3/7] [#] URL & Parameter Discovery
+[Phase 4/7] {js} JavaScript Intelligence
+[Phase 5/7] [!] Sensitive Asset Detection
+[Phase 6/7] [f] Intelligence & Correlation
+[Phase 7/7] [ss] Screenshots & Report
+.fi
+.RE
+.SH ICONS
+Professional terminal icons used throughout:
+.TP
+.B [*]
+Informational message
+.TP
+.B [+]
+Success/Completion
+.TP
+.B [!]
+Warning/Alert
+.TP
+.B [-]
+Error
+.TP
+.B [FOUND]
+Discovery notification
+.SH REPORTING
+Two report formats are available:
+.SS Modern Report (Default)
+Generated as \fI<domain>_modern.html\fR:
+.RS
+- Bootstrap 5 dark theme
+- Responsive design
+- Screenshot gallery with lightbox
+- Interactive statistics panels
+- Professional color scheme
+.RE
+.SS Classic Report
+Generated as \fI<domain>_report.html\fR with --simple flag:
+.RS
+- Simple HTML layout
+- Minimal styling
+- Fast rendering
+- Portable format
+.RE
+.SH TROUBLESHOOTING
+.SS Firefox Screenshots Not Working
+Check Firefox installation:
+.PP
+.B firefox --version
+.B firefox --headless --screenshot=/tmp/test.png https://example.com
+.SS Permission Denied
+Use passive-only mode or reduce threads:
+.PP
+.B reco-nova -d target.com --passive-only --threads 5
+.SS Memory Issues
+Process targets in batches:
+.PP
+.B reco-nova -l targets.txt --threads 10
+.SS Debug Information
+Enable debug logging:
+.PP
+.B reco-nova -d target.com --debug
+.SH DEPENDENCIES
+.SS Required
+- Python 3.9+
+- aiohttp
+- beautifulsoup4
+- rich
+.SS Optional (Enhanced Features)
+- Firefox (screenshots)
+- subfinder (subdomain discovery)
+- httpx (HTTP probing)
+- amass (subdomain enumeration)
+- gowitness (screenshot fallback)
+.SH BUGS
+Report issues at: https://github.com/daniyalshahid/reco-nova/issues
+.SH AUTHOR
+Daniyal Shahid <daniyal.shahid@example.com>
+.PP
+Security Researcher | Bug Bounty Hunter | Penetration Tester
+.SH COPYRIGHT
+MIT License
+.PP
+Copyright (c) 2024-2026 Daniyal Shahid
+.PP
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+.PP
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+.SH VERSION
+Reco-Nova v1.2 - Bulletproof Edition
+.PP
+Tested on Kali Linux with Python 3.13
+.SH SEE ALSO
+.BR python3 (1),
+.BR firefox (1),
+.BR subfinder (1),
+.BR httpx (1),
+.BR amass (1)
+.PP
+Full documentation available at: https://github.com/daniyalshahid/reco-nova
+.SH NOTES
+The framework is designed to be crash-resistant. Every phase is wrapped in
+exception handling, ensuring the scan always completes and generates a report
+even if individual phases fail.
+.PP
+For best results, run with appropriate permissions and respect target systems'
+rate limits. Always obtain proper authorization before scanning.

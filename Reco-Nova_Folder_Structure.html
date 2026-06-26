@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reco-Nova — Folder Structure Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0A0E1A; font-family: 'Segoe UI', Arial, sans-serif; color: #E2E8F0; min-height: 100vh; }
+
+  .header {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border-bottom: 3px solid #E94560;
+    padding: 28px 40px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .header-icon { font-size: 36px; }
+  .header h1 { font-size: 24px; color: #E94560; font-weight: 700; }
+  .header p { color: #94A3B8; font-size: 13px; margin-top: 4px; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+
+  .section-title {
+    font-size: 13px; font-weight: 700; color: #E94560;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin: 32px 0 14px 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: #1E293B;
+  }
+
+  /* TREE */
+  .tree-card {
+    background: #0D1117; border: 1px solid #21262D;
+    border-radius: 12px; overflow: hidden;
+  }
+  .tree-header {
+    background: #161B22; padding: 12px 20px;
+    border-bottom: 1px solid #21262D;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tree-header span { font-size: 13px; color: #58A6FF; font-family: 'Courier New', monospace; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #E94560; }
+  .dot.yellow { background: #F5A623; }
+  .dot.green { background: #34D399; }
+
+  .tree-body { padding: 20px 24px; font-family: 'Courier New', monospace; font-size: 14px; line-height: 2; }
+
+  .tree-root { color: #E94560; font-weight: bold; font-size: 16px; }
+  .tree-folder { color: #58A6FF; font-weight: 600; }
+  .tree-file { color: #8B949E; }
+  .tree-file.main { color: #F0883E; font-weight: bold; }
+  .tree-file.config { color: #BC8CFF; }
+  .tree-file.core { color: #56D364; }
+  .tree-file.module { color: #79C0FF; }
+  .tree-file.intel { color: #F5A623; }
+  .tree-file.install { color: #34D399; font-weight: bold; }
+  .tree-file.req { color: #E94560; }
+  .tree-comment { color: #484F58; font-style: italic; font-size: 12px; }
+  .tree-auto { color: #21262D; font-size: 12px; font-style: italic; }
+  .indent1 { padding-left: 22px; }
+  .indent2 { padding-left: 44px; }
+  .indent3 { padding-left: 66px; }
+  .pipe { color: #30363D; }
+
+  /* FILE CARDS GRID */
+  .files-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+  .file-card {
+    background: #0D1117; border: 1px solid #21262D;
+    border-radius: 10px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .file-card:hover { border-color: #E94560; }
+
+  .file-card-header {
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid #21262D;
+  }
+  .file-icon { font-size: 18px; }
+  .file-name { font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; }
+  .file-path { font-size: 10px; color: #484F58; margin-top: 2px; }
+  .file-card-body { padding: 12px 16px; }
+  .file-desc { font-size: 13px; color: #8B949E; line-height: 1.6; }
+  .file-tag {
+    display: inline-block; margin-top: 8px; margin-right: 4px;
+    padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
+  }
+
+  /* COLOR THEMES PER FOLDER */
+  .theme-root  { border-left: 3px solid #E94560; }
+  .theme-core  { border-left: 3px solid #34D399; }
+  .theme-mod   { border-left: 3px solid #79C0FF; }
+  .theme-intel { border-left: 3px solid #F5A623; }
+  .theme-cfg   { border-left: 3px solid #BC8CFF; }
+
+  .tag-entry   { background: #3D1A1E; color: #E94560; }
+  .tag-core    { background: #0D2818; color: #34D399; }
+  .tag-module  { background: #0D1F2D; color: #79C0FF; }
+  .tag-intel   { background: #2D1F00; color: #F5A623; }
+  .tag-config  { background: #1E0D3D; color: #BC8CFF; }
+  .tag-async   { background: #0D2818; color: #56D364; }
+
+  /* QUICK START */
+  .commands-card {
+    background: #0D1117; border: 1px solid #21262D; border-radius: 12px; overflow: hidden;
+  }
+  .cmd-row {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 14px 20px; border-bottom: 1px solid #161B22;
+  }
+  .cmd-row:last-child { border-bottom: none; }
+  .cmd-num {
+    min-width: 26px; height: 26px; border-radius: 50%;
+    background: #E94560; color: #fff; font-size: 12px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .cmd-content { flex: 1; }
+  .cmd-label { font-size: 12px; color: #58A6FF; font-weight: 600; margin-bottom: 4px; }
+  .cmd-code {
+    background: #161B22; border: 1px solid #21262D; border-radius: 6px;
+    padding: 8px 14px; font-family: 'Courier New', monospace; font-size: 13px; color: #34D399;
+  }
+  .cmd-note { font-size: 12px; color: #484F58; margin-top: 4px; }
+
+  /* STRUCTURE MAP */
+  .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .map-card {
+    background: #0D1117; border: 1px solid #21262D; border-radius: 10px;
+    padding: 16px; text-align: center;
+  }
+  .map-card .folder-icon { font-size: 28px; margin-bottom: 8px; }
+  .map-card .folder-name { font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; }
+  .map-card .folder-count { font-size: 11px; color: #484F58; margin-top: 4px; }
+  .map-card .folder-desc { font-size: 11px; color: #8B949E; margin-top: 6px; line-height: 1.5; }
+
+  .footer {
+    text-align: center; padding: 24px;
+    color: #484F58; font-size: 12px; border-top: 1px solid #161B22;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">⚡</div>
+  <div>
+    <h1>Reco-Nova — Folder Structure Guide</h1>
+    <p>Developer: Daniyal Shahid &nbsp;|&nbsp; v1.2 (Pro-Level) &nbsp;|&nbsp; Total: 20 Python files across 5 packages</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- FOLDER OVERVIEW -->
+  <div class="section-title">📁 Folder Overview</div>
+  <div class="map-grid">
+    <div class="map-card">
+      <div class="folder-icon">📂</div>
+      <div class="folder-name" style="color:#E94560">reco-nova/</div>
+      <div class="folder-count">Root Folder</div>
+      <div class="folder-desc">Project root — entry point, install script, requirements</div>
+    </div>
+    <div class="map-card">
+      <div class="folder-icon">🧠</div>
+      <div class="folder-name" style="color:#34D399">core/</div>
+      <div class="folder-count">8 files</div>
+      <div class="folder-desc">Engine, scanner, reporter, monitor, display, logger, stealth utils</div>
+    </div>
+    <div class="map-card">
+      <div class="folder-icon">🔍</div>
+      <div class="folder-name" style="color:#79C0FF">modules/</div>
+      <div class="folder-count">7 files</div>
+      <div class="folder-desc">Recon modules — subdomains, HTTP (WAF-aware), URLs, async JS intel, baseline-filtered sensitive assets, fingerprint, screenshots</div>
+    </div>
+    <div class="map-card">
+      <div class="folder-icon">🎯</div>
+      <div class="folder-name" style="color:#F5A623">intelligence/</div>
+      <div class="folder-count">2 files</div>
+      <div class="folder-desc">Analysis engine, correlation, graph builder</div>
+    </div>
+    <div class="map-card">
+      <div class="folder-icon">⚙️</div>
+      <div class="folder-name" style="color:#BC8CFF">config/</div>
+      <div class="folder-count">1 file</div>
+      <div class="folder-desc">All settings, vuln maps, secret patterns</div>
+    </div>
+    <div class="map-card">
+      <div class="folder-icon">📊</div>
+      <div class="folder-name" style="color:#58A6FF">output/ (auto)</div>
+      <div class="folder-count">Auto-created</div>
+      <div class="folder-desc">Scan results per domain — subdomains, urls, parameters, secrets</div>
+    </div>
+    <div class="map-card">
+      <div class="folder-icon">🗺️</div>
+      <div class="folder-name" style="color:#56D364">graphs/ (auto)</div>
+      <div class="folder-count">Auto-created</div>
+      <div class="folder-desc">JSON + interactive HTML attack surface graphs</div>
+    </div>
+    <div class="map-card">
+      <div class="folder-icon">📋</div>
+      <div class="folder-name" style="color:#F0883E">reports/ (auto)</div>
+      <div class="folder-count">Auto-created</div>
+      <div class="folder-desc">Full HTML scan report per domain</div>
+    </div>
+  </div>
+
+  <!-- FULL TREE -->
+  <div class="section-title">🌳 Complete Folder Tree</div>
+  <div class="tree-card">
+    <div class="tree-header">
+      <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+      <span>reco-nova/ — Full Project Structure</span>
+    </div>
+    <div class="tree-body">
+
+<div><span class="tree-root">reco-nova/</span></div>
+
+<div class="indent1"><span class="pipe">│</span></div>
+<div class="indent1"><span class="pipe">├── </span><span class="tree-file main">reco_nova.py</span> &nbsp;<span class="tree-comment">← MAIN ENTRY POINT — CLI with --simple, --debug flags</span></div>
+<div class="indent1"><span class="pipe">├── </span><span class="tree-file install">install.sh</span> &nbsp;<span class="tree-comment">← Run first — installs deps + creates global alias</span></div>
+<div class="indent1"><span class="pipe">├── </span><span class="tree-file req">requirements.txt</span> &nbsp;<span class="tree-comment">← Python dependencies</span></div>
+<div class="indent1"><span class="pipe">├── </span><span class="tree-file config">README.md</span> &nbsp;<span class="tree-comment">← Professional documentation</span></div>
+<div class="indent1"><span class="pipe">├── </span><span class="tree-file config">FOLDER_STRUCTURE.md</span> &nbsp;<span class="tree-comment">← This guide in Markdown</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder">core/</span> &nbsp;<span class="tree-comment">← Engine, UI, logger, scanner orchestrator</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file">__init__.py</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">banner.py</span> &nbsp;<span class="tree-comment">← ASCII art banner</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">logger.py</span> &nbsp;<span class="tree-comment">← Centralized logging + forensic audit logger</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">display.py</span> &nbsp;<span class="tree-comment">← Rich terminal UI with icons [*] [+] [!] [-]</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">setup_checker.py</span> &nbsp;<span class="tree-comment">← Dependency verification</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">input_handler.py</span> &nbsp;<span class="tree-comment">← Target input processing</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">scan_engine.py</span> &nbsp;<span class="tree-comment">← 7-phase scan orchestrator</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">reporter.py</span> &nbsp;<span class="tree-comment">← Classic HTML report</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">reporter_modern.py</span> &nbsp;<span class="tree-comment">← Bootstrap dark theme with URL intelligence (DEFAULT)</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file core">monitor.py</span> &nbsp;<span class="tree-comment">← Continuous monitoring mode</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; └── </span><span class="tree-file core">utils.py</span> &nbsp;<span class="tree-comment">← Stealth headers, User-Agent rotation</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder">modules/</span> &nbsp;<span class="tree-comment">← All recon discovery modules</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file">__init__.py</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file module">subdomain_discovery.py</span> &nbsp;<span class="tree-comment">← Phase 1: Subdomain enumeration</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file module">http_probe.py</span> &nbsp;<span class="tree-comment">← Phase 2: HTTP probing, WAF detection</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file module">url_discovery.py</span> &nbsp;<span class="tree-comment">← Phase 3: Wayback, CommonCrawl</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file module">js_intelligence.py</span> &nbsp;<span class="tree-comment">← Phase 4: JS analysis & secrets</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file module">sensitive_assets.py</span> &nbsp;<span class="tree-comment">← Phase 5: Sensitive file detection</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file module">fingerprinting.py</span> &nbsp;<span class="tree-comment">← Phase 6: Native TECH_PATTERNS + favicon MurmurHash3</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file module">vulnerability_scanner.py</span> &nbsp;<span class="tree-comment">← Optional: Nuclei vuln scan (--nuclei)</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; └── </span><span class="tree-file module">screenshots.py</span> &nbsp;<span class="tree-comment">← Phase 7: Firefox → gowitness → httpx (stealth UA)</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder">intelligence/</span> &nbsp;<span class="tree-comment">← Analysis & graph building</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file">__init__.py</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file intel">analysis.py</span> &nbsp;<span class="tree-comment">← Parameter vulns + risk scoring</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file intel">correlation.py</span> &nbsp;<span class="tree-comment">← Classic graph data</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; └── </span><span class="tree-file intel">correlation_modern.py</span> &nbsp;<span class="tree-comment">← D3.js interactive graphs</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder">config/</span> &nbsp;<span class="tree-comment">← Settings and configuration</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; ├── </span><span class="tree-file">__init__.py</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; └── </span><span class="tree-file config">settings.py</span> &nbsp;<span class="tree-comment">← All tunables, vuln maps</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder">man/</span> &nbsp;<span class="tree-comment">← Manual page</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; └── </span><span class="tree-file config">reco-nova.1</span> &nbsp;<span class="tree-comment">← Man page source</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder" style="color:#484F58">output/</span> &nbsp;<span class="tree-auto">← Auto-created when scan runs</span></div>
+<div class="indent2"><span class="pipe">│ &nbsp; └── </span><span class="tree-file" style="color:#484F58">example.com/</span> &nbsp;<span class="tree-auto">← One folder per target</span></div>
+<div class="indent3"><span class="tree-auto">subdomains.txt, live_hosts.txt, urls.txt, parameters.txt</span></div>
+<div class="indent3"><span class="tree-auto">js_analysis.txt, secrets.txt, sensitive_files.txt</span></div>
+<div class="indent3"><span class="tree-auto">cloud_assets.txt, fingerprints.txt, probe_results.txt</span></div>
+<div class="indent3"><span class="tree-auto">correlation.txt, prioritized_targets.txt, scan_log.txt, nuclei_results.json*</span></div>
+<div class="indent3"><span class="tree-auto">screenshots/ (*.png files)</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder" style="color:#484F58">graphs/</span> &nbsp;<span class="tree-auto">← Auto-created</span></div>
+<div class="indent2"><span class="tree-auto">example.com_graph.json — Graph data</span></div>
+<div class="indent2"><span class="tree-auto">example.com_graph.html — D3.js visualization</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">├── </span><span class="tree-folder" style="color:#484F58">reports/</span> &nbsp;<span class="tree-auto">← Auto-created</span></div>
+<div class="indent2"><span class="tree-auto">example.com_modern.html — Modern Bootstrap (default)</span></div>
+<div class="indent2"><span class="tree-auto">example.com_report.html — Classic simple (--simple flag)</span></div>
+<div class="indent1"><span class="pipe">│</span></div>
+
+<div class="indent1"><span class="pipe">└── </span><span class="tree-folder" style="color:#484F58">logs/</span> &nbsp;<span class="tree-auto">← Auto-created</span></div>
+<div class="indent2"><span class="tree-auto">reco-nova-20250318-060812.log</span></div>
+
+    </div>
+  </div>
+
+  <!-- FILE CARDS -->
+  <div class="section-title">📄 File Descriptions</div>
+  <div class="files-grid">
+
+    <div class="file-card theme-root">
+      <div class="file-card-header">
+        <div class="file-icon">🚀</div>
+        <div><div class="file-name" style="color:#F0883E">reco_nova.py</div><div class="file-path">reco-nova/reco_nova.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Main entry point. Contains CLI parser with all commands (-d, -l, --full, --graph). Run this file to start the tool.</div>
+        <span class="file-tag tag-entry">ENTRY POINT</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-root">
+      <div class="file-card-header">
+        <div class="file-icon">⬇️</div>
+        <div><div class="file-name" style="color:#34D399">install.sh</div><div class="file-path">reco-nova/install.sh</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Bash installer script. Checks Python version, installs pip dependencies, creates reco-nova alias in ~/.bashrc and ~/.zshrc.</div>
+        <span class="file-tag tag-entry">RUN FIRST</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-root">
+      <div class="file-card-header">
+        <div class="file-icon">📦</div>
+        <div><div class="file-name" style="color:#E94560">requirements.txt</div><div class="file-path">reco-nova/requirements.txt</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">All Python library dependencies: requests, aiohttp, beautifulsoup4, rich, typer, tldextract, dnspython, jsbeautifier, jinja2, aiofiles.</div>
+        <span class="file-tag tag-entry">DEPENDENCIES</span>
+      </div>
+    </div>
+
+    <!-- CORE -->
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">🎨</div>
+        <div><div class="file-name" style="color:#34D399">core/banner.py</div><div class="file-path">core/banner.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Prints the Reco-Nova ASCII art banner with Rich styling on every startup.</div>
+        <span class="file-tag tag-core">CORE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">📝</div>
+        <div><div class="file-name" style="color:#34D399">core/logger.py</div><div class="file-path">core/logger.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Centralized logging system. Writes timestamped log files to logs/ folder. All modules use get_logger() from here.</div>
+        <span class="file-tag tag-core">CORE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">🖥️</div>
+        <div><div class="file-name" style="color:#34D399">core/display.py</div><div class="file-path">core/display.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Rich-based terminal UI v1.2: Professional icons ([*], [+], [!], [-]), boxed layouts, columns, progress bars, and debug mode support. Clean output by default, verbose with --debug.</div>
+        <span class="file-tag tag-core">CORE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">✅</div>
+        <div><div class="file-name" style="color:#34D399">core/setup_checker.py</div><div class="file-path">core/setup_checker.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Verifies Python version, checks and auto-installs pip libraries (bs4/mmh3/lxml), checks external tools (subfinder, httpx, amass, gowitness, nuclei), and updates Nuclei templates (`nuclei -ut`) when available. Run with: reco-nova setup</div>
+        <span class="file-tag tag-core">CORE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">📥</div>
+        <div><div class="file-name" style="color:#34D399">core/input_handler.py</div><div class="file-path">core/input_handler.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Handles all input modes: single domain (-d), file list (-l), stdin pipe, and interactive terminal input. Validates and deduplicates all targets.</div>
+        <span class="file-tag tag-core">CORE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">⚙️</div>
+        <div><div class="file-name" style="color:#34D399">core/scan_engine.py</div><div class="file-path">core/scan_engine.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Master orchestrator. Runs all 7 scan phases: subdomains → HTTP probe (403/401 = LIVE, WAF-aware throttling) → URL discovery (>10 URLs auto-added to live_hosts) → JS intel → sensitive files → intelligence → screenshots + report.</div>
+        <span class="file-tag tag-core">CORE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">📊</div>
+        <div><div class="file-name" style="color:#34D399">core/reporter.py</div><div class="file-path">core/reporter.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Generates a simple HTML report with all findings. Classic fallback when --simple flag is used.</div>
+        <span class="file-tag tag-core">CORE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">🎨</div>
+        <div><div class="file-name" style="color:#34D399">core/reporter_modern.py</div><div class="file-path">core/reporter_modern.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc"><strong>v1.2 Modern Report (DEFAULT).</strong> Bootstrap 5 dark theme, responsive design, screenshot lightbox gallery, interactive statistics panels. Generates <domain>_modern.html.</div>
+        <span class="file-tag tag-core">CORE</span><span class="file-tag" style="background:#0D3D1A;color:#4ADE80">HYBRID</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">👁️</div>
+        <div><div class="file-name" style="color:#34D399">core/monitor.py</div><div class="file-path">core/monitor.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Continuous monitoring mode. Runs repeated scans at set intervals and diffs results against baseline to detect new assets/changes.</div>
+        <span class="file-tag tag-core">CORE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+<div class="file-card theme-core">
+      <div class="file-card-header">
+        <div class="file-icon">🛡️</div>
+        <div><div class="file-name" style="color:#34D399">core/utils.py</div><div class="file-path">core/utils.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc"><strong>v1.2 Stealth Module.</strong> Global header rotation with 15+ User-Agents, fake referers, execution jitter helper. Provides get_random_ua(), get_stealth_headers(), and get_random_referer() for WAF evasion.</div>
+        <span class="file-tag tag-core">CORE</span><span class="file-tag" style="background:#3D1A1E;color:#E94560">STEALTH</span>
+      </div>
+    </div>
+
+    <!-- MODULES -->
+    <div class="file-card theme-mod">
+      <div class="file-card-header">
+        <div class="file-icon">🌐</div>
+        <div><div class="file-name" style="color:#79C0FF">modules/subdomain_discovery.py</div><div class="file-path">modules/subdomain_discovery.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Discovers subdomains via crt.sh, HackerTarget, AlienVault OTX, RapidDNS, ThreatCrowd, subfinder, assetfinder, amass, and DNS brute-force.</div>
+        <span class="file-tag tag-module">MODULE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-mod">
+      <div class="file-card-header">
+        <div class="file-icon">🔌</div>
+        <div><div class="file-name" style="color:#79C0FF">modules/http_probe.py</div><div class="file-path">modules/http_probe.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Probes all discovered hosts for HTTP/HTTPS. Detects live hosts, login panels, admin pages, APIs. Discovers API paths (/api/v1, /graphql etc.). Supports adaptive delay/jitter when WAFs are detected.</div>
+        <span class="file-tag tag-module">MODULE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-mod">
+      <div class="file-card-header">
+        <div class="file-icon">🔗</div>
+        <div><div class="file-name" style="color:#79C0FF">modules/url_discovery.py</div><div class="file-path">modules/url_discovery.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Collects URLs from Wayback Machine, CommonCrawl, and live web crawler. Extracts all URL parameters for vulnerability analysis.</div>
+        <span class="file-tag tag-module">MODULE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-mod">
+      <div class="file-card-header">
+        <div class="file-icon">🧩</div>
+        <div><div class="file-name" style="color:#79C0FF">modules/js_intelligence.py</div><div class="file-path">modules/js_intelligence.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Downloads and beautifies JS files via an asyncio worker queue. Extracts hidden endpoints, API paths, and detects 20+ secret types (AWS keys, GitHub tokens, JWTs, Stripe, Firebase, etc.) with multi-line-aware regex.</div>
+        <span class="file-tag tag-module">MODULE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-mod">
+      <div class="file-card-header">
+        <div class="file-icon">🚨</div>
+        <div><div class="file-name" style="color:#79C0FF">modules/sensitive_assets.py</div><div class="file-path">modules/sensitive_assets.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Checks 30+ sensitive file paths (.env, .git, backup.zip, config.php, etc.) across all live hosts, using per-host baseline comparison to filter ghost/custom 404 responses. Also detects cloud storage assets (S3, Azure, GCP).</div>
+        <span class="file-tag tag-module">MODULE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-mod">
+      <div class="file-card-header">
+        <div class="file-icon">🔎</div>
+        <div><div class="file-name" style="color:#79C0FF">modules/fingerprinting.py</div><div class="file-path">modules/fingerprinting.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc"><strong>v1.2 Native Fingerprinting.</strong> TECH_PATTERNS engine (headers, HTML meta, script tags, body regex) with bs4 + regex fallback. Includes favicon MurmurHash3 hashing via mmh3 and seeded hash mapping.</div>
+        <span class="file-tag tag-module">MODULE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-mod">
+      <div class="file-card-header">
+        <div class="file-icon">📸</div>
+        <div><div class="file-name" style="color:#79C0FF">modules/screenshots.py</div><div class="file-path">modules/screenshots.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc"><strong>v1.2 Triple Fallback.</strong> Firefox Headless (primary) → gowitness (fallback) → httpx with stealth UA rotation (tertiary). Force Logic extracts domains from URLs when live_hosts=0.</div>
+        <span class="file-tag tag-module">MODULE</span><span class="file-tag tag-async">ASYNC</span>
+      </div>
+    </div>
+
+    <!-- INTELLIGENCE -->
+    <div class="file-card theme-intel">
+      <div class="file-card-header">
+        <div class="file-icon">🎯</div>
+        <div><div class="file-name" style="color:#F5A623">intelligence/analysis.py</div><div class="file-path">intelligence/analysis.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Maps 50+ URL parameters to vulnerability classes (IDOR, SQLi, LFI, SSRF, Open Redirect etc.). Scores and ranks all endpoints by context-aware risk (0–100), taking into account admin/API paths and parameter placement.</div>
+        <span class="file-tag tag-intel">INTELLIGENCE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-intel">
+      <div class="file-card-header">
+        <div class="file-icon">🗺️</div>
+        <div><div class="file-name" style="color:#F5A623">intelligence/correlation.py</div><div class="file-path">intelligence/correlation.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Links all recon data per host into unified profiles. Classic graph data generation.</div>
+        <span class="file-tag tag-intel">INTELLIGENCE</span>
+      </div>
+    </div>
+
+    <div class="file-card theme-intel">
+      <div class="file-card-header">
+        <div class="file-icon">📈</div>
+        <div><div class="file-name" style="color:#F5A623">intelligence/correlation_modern.py</div><div class="file-path">intelligence/correlation_modern.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc"><strong>v1.2 D3.js Interactive Graphs.</strong> Modern attack surface visualization with zoom, pan, drag nodes. Generates interactive HTML with dark theme matching reports.</div>
+        <span class="file-tag tag-intel">INTELLIGENCE</span><span class="file-tag" style="background:#0D3D1A;color:#4ADE80">D3.JS</span>
+      </div>
+    </div>
+
+    <!-- CONFIG -->
+    <div class="file-card theme-cfg">
+      <div class="file-card-header">
+        <div class="file-icon">⚙️</div>
+        <div><div class="file-name" style="color:#BC8CFF">config/settings.py</div><div class="file-path">config/settings.py</div></div>
+      </div>
+      <div class="file-card-body">
+        <div class="file-desc">Central configuration. Contains: thread/timeout settings, 30+ sensitive file paths, admin keywords, 50+ parameter→vulnerability mappings, 20+ secret detection regex patterns.</div>
+        <span class="file-tag tag-config">CONFIG</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- QUICK START -->
+  <div class="section-title">🚀 Quick Start — Step by Step</div>
+  <div class="commands-card">
+    <div class="cmd-row">
+      <div class="cmd-num">1</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Clone / Extract the project</div>
+        <div class="cmd-code">cd reco-nova</div>
+        <div class="cmd-note">Make sure you are inside the reco-nova/ root folder</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">2</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Run installer</div>
+        <div class="cmd-code">bash install.sh</div>
+        <div class="cmd-note">Installs pip dependencies and creates the reco-nova alias</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">3</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Load the alias (one time)</div>
+        <div class="cmd-code">source ~/.bashrc</div>
+        <div class="cmd-note">Or source ~/.zshrc if using Zsh</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">4</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Verify environment</div>
+        <div class="cmd-code">reco-nova setup</div>
+        <div class="cmd-note">Checks Python version, pip libs, and external tools (subfinder, httpx, etc.)</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">5</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Run your first scan</div>
+        <div class="cmd-code">reco-nova -d example.com</div>
+        <div class="cmd-note">Or: python3 reco_nova.py -d example.com</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">6</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Full scan with graph</div>
+        <div class="cmd-code">reco-nova -d example.com --full --graph</div>
+        <div class="cmd-note">Enables all modules including attack surface graph generation</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">7</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Modern vs Classic report</div>
+        <div class="cmd-code">reco-nova -d example.com          # Modern Bootstrap (default)</div>
+        <div class="cmd-code">reco-nova -d example.com --simple  # Classic simple HTML</div>
+        <div class="cmd-note">Use --simple for lightweight classic report, default is modern dark theme</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">8</div>
+      <div class="cmd-content">
+        <div class="cmd-label">Debug mode for troubleshooting</div>
+        <div class="cmd-code">reco-nova -d example.com --debug</div>
+        <div class="cmd-note">Shows detailed logs and debug information during scan</div>
+      </div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd-num">9</div>
+      <div class="cmd-content">
+        <div class="cmd-label">View results</div>
+        <div class="cmd-code">open reports/example.com_modern.html  # Modern report</div>
+        <div class="cmd-code">open reports/example.com_report.html  # Classic report</div>
+        <div class="cmd-note">Or open graphs/example.com_graph.html for interactive D3.js visualization</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Reco-Nova v1.2 &nbsp;|&nbsp; Developer: Daniyal Shahid &nbsp;|&nbsp;
+  Use only against authorized targets. Unauthorized use is illegal.
+</div>
+
+</body>
+</html>
