@@ -25,7 +25,7 @@
 
 ---
 [Installation](https://github.com/SkillDevloper/Reco-Nova/blob/v2/README_PROFESSIONAL.md)
-[Folder Structure](https://github.com/SkillDevloper/Reco-Nova/blob/v2/Reco-Nova_Folder_Structure.html)
+[Folder Structure](https://github.com/SkillDevloper/Reco-Nova/blob/v2/index.html)
 
 ## 📌 Table of Contents
 
