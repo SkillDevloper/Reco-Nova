@@ -45,7 +45,6 @@ Please make sure to **verify and test everything carefully** before using it in 
 - [Output Files](#output-files)
 - [Scan Phases](#scan-phases)
 - [Intelligence Engine](#intelligence-engine)
-- [Troubleshooting](#troubleshooting)
 - [Legal Disclaimer](#legal-disclaimer)
 - [Developer](#developer)
 
