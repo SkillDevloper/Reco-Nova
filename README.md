@@ -24,6 +24,8 @@
 </p>
 
 ---
+[Installation](https://github.com/SkillDevloper/Reco-Nova/blob/v2/README_PROFESSIONAL.md)
+[Folder Structure](https://github.com/SkillDevloper/Reco-Nova/blob/v2/Reco-Nova_Folder_Structure.html)
 
 ## 📌 Table of Contents
 
@@ -237,7 +239,7 @@ Reco-Nova v-1.2/
 ### Step 1 — Navigate to project folder
 
 ```bash
-cd ~/Desktop/Reconova-v1.0
+cd ~/Desktop/Reconova-v1.2
 ```
 
 ### Step 2 — Install system-level screenshot dependencies
@@ -295,7 +297,7 @@ source ~/.bashrc
 Linux is case-sensitive. Run this once:
 
 ```bash
-cd ~/Desktop/Reconova-v1.0
+cd ~/Desktop/Reconova-v1.2
 mv config/Settings.py config/settings.py
 mv core/Banner.py core/banner.py
 mv core/Display.py core/display.py
