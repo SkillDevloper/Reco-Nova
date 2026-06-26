@@ -44,10 +44,10 @@ Please make sure to **verify and test everything carefully** before using it in 
 - [All Commands](#all-commands)
 - [Output Files](#output-files)
 - [Scan Phases](#scan-phases)
-- [Intelligence Engine](#-intelligence-engine)
+- [Intelligence Engine](#intelligence-engine)
 - [Troubleshooting](#troubleshooting)
-- [Legal Disclaimer](#-legal-disclaimer)
-- [Developer](#-developer)
+- [Legal Disclaimer](#legal-disclaimer)
+- [Developer](#developer)
 
 ---
 
@@ -724,24 +724,16 @@ reco-nova -d example.com
 
 ## Legal Disclaimer
 
-╔══════════════════════════════════════════════════════════════╗
-║                    LEGAL DISCLAIMER                          ║
-║                                                              ║
-║  Reco-Nova is designed EXCLUSIVELY for authorized security   ║
-║  testing and educational purposes.                           ║
-║                                                              ║
-║  Use of this tool against systems WITHOUT explicit written   ║
-║  authorization from the system owner is ILLEGAL and          ║
-║  UNETHICAL under applicable computer crime laws.             ║
-║                                                              ║
-║  The developer (Daniyal Shahid) assumes NO liability for     ║
-║  unauthorized, unethical, or illegal use of this tool.       ║
-║                                                              ║
-║  Always:                                                     ║
-║  • Obtain written authorization before scanning              ║
-║  • Follow responsible disclosure practices                   ║
-║  • Comply with bug bounty program scope and rules            ║
-╚══════════════════════════════════════════════════════════════╝
+> ⚠️ **LEGAL DISCLAIMER**
+>
+> **Reco-Nova** is designed EXCLUSIVELY for authorized security testing and educational purposes. 
+> 
+> Use of this tool against systems WITHOUT explicit written authorization from the system owner is **ILLEGAL** and **UNETHICAL** under applicable computer crime laws. The developer (Daniyal Shahid) assumes **NO liability** for unauthorized, unethical, or illegal use of this tool.
+>
+> **Always:**
+> * Obtain written authorization before scanning.
+> * Follow responsible disclosure practices.
+> * Comply with bug bounty program scope and rules.
 
 ## Developer
 
