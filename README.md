@@ -24,25 +24,30 @@
 </p>
 
 ---
+## ⚠️There may be bugs, errors, or incomplete features present in this version.
+Please make sure to **verify and test everything carefully** before using it in any production environment.
+
+> 🚧 **Note:** Development is in progress for version v1.2
+
 [Installation](https://github.com/SkillDevloper/Reco-Nova/blob/v2/README_PROFESSIONAL.md)
 [Folder Structure](https://skilldevloper.github.io/Reco-Nova/)
 
 ## 📌 Table of Contents
 
-- [What is Reco-Nova?](#-what-is-reco-nova)
-- [What's New in v1.1?](#-whats-new-in-v11)
-- [Features](#-features)
-- [Folder Structure](#-folder-structure)
-- [Installation](#-installation)
-- [Man Page](#-man-page)
-- [Usage](#-usage)
-- [All Commands](#-all-commands)
-- [Output Files](#-output-files)
-- [Scan Phases](#-scan-phases)
-- [Intelligence Engine](#-intelligence-engine)
-- [Dependencies](#-dependencies)
-- [Troubleshooting](#-troubleshooting)
-- [Legal Disclaimer](#-legal-disclaimer)
+- [What is Reco-Nova?](##-what-is-reco-nova)
+- [What's New in v1.1?](##-whats-new-in-v11)
+- [Features](##-features)
+- [Folder Structure](##-folder-structure)
+- [Installation](##-installation)
+- [Man Page](##-man-page)
+- [Usage](##-usage)
+- [All Commands](##-all-commands)
+- [Output Files](##-output-files)
+- [Scan Phases](##-scan-phases)
+- [Intelligence Engine](##-intelligence-engine)
+- [Dependencies](##-dependencies)
+- [Troubleshooting](##-troubleshooting)
+- [Legal Disclaimer](##-legal-disclaimer)
 
 ---
 
