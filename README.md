@@ -239,7 +239,7 @@ Reco-Nova v-1.2/
 ### Step 1 — Navigate to project folder
 
 ```bash
-cd ~/Desktop/Reconova-v1.2
+cd ~/Desktop/Reconova
 ```
 
 ### Step 2 — Install system-level screenshot dependencies
@@ -297,7 +297,7 @@ source ~/.bashrc
 Linux is case-sensitive. Run this once:
 
 ```bash
-cd ~/Desktop/Reconova-v1.2
+cd ~/Desktop/Reconova
 mv config/Settings.py config/settings.py
 mv core/Banner.py core/banner.py
 mv core/Display.py core/display.py
