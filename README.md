@@ -22,11 +22,7 @@ This project is currently in **version 1.1** and is considered a **prototype**.
 There may be bugs, errors, or incomplete features present in this version.
 Please make sure to **verify and test everything carefully** before using it in any production environment.
 
-> 🚧 **Note:** Development is in progress for version v1.2
-
 https://github.com/user-attachments/assets/5f2b82f9-74fd-4da1-a20d-dc546cd2e2e4
-
-
 
 A powerful **Linux-based command-line reconnaissance tool** designed to automate key phases of bug bounty and penetration testing reconnaissance. **Professional Edition** with enhanced UI and automatic dependency management.
 
